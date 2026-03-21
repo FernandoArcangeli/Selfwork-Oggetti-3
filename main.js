@@ -1,52 +1,28 @@
-let bowling = {
-    giocatori: [
-        {nome: "Livio",punteggi: []},
-        {nome: "Paola",punteggi: []},
-        {nome: "Filippo",punteggi: []},
-        {nome: "Giuseppe",punteggi: []},
-    ],
-    creaPunteggio: function(){
-        this.giocatori.forEach(giocatore => {
-            for (let i = 1; i <= 10; i++) {
-                giocatore.punteggi.push(Math.floor(Math.random() * (10 - 1 + 1) + 1))
-            }    
-        });
+let input = document.querySelector('input');
+let text = document.querySelector('textarea');
+let button = document.querySelector('button');
+let container = document.querySelector('.contenitore');
 
-    },
+button.addEventListener('click', () =>{
+    let data = new Date();
+    let formatDate = data.toLocaleDateString();
 
-    nuovoGiocatore: function(nome){
-        let nuovoGiocatore = {nome: nome, punteggi: []}
-        for (let i = 1; i <= 10; i++) {
-            nuovoGiocatore.punteggi.push(Math.floor(Math.random() * (10 - 1 + 1) + 1))
-        }
-        this.giocatori.push(nuovoGiocatore)   
-    },
-
-    punteggioTotale: function(){
-        this.giocatori.forEach(giocatore => {
-            let totale = giocatore.punteggi.reduce((acc, punteggio) => acc + punteggio);
-            giocatore.totale = totale;
-            
-        });
-        this.giocatori.sort((a, b) => b.totale - a.totale);
+    if(input.value == `` || text.value == ``){
+        alert('Compila tutti i campi!')
         
-    },
-    vincitore: function(){
-        let vincitore = this.giocatori[0];
-        console.log("Il vincitore è " + vincitore.nome + " con " + vincitore.totale + " punti");
-    },
+    } else {
+        let div = document.createElement('div')
+        div.style.backgroundColor = 'lightgray';
+        div.style.padding = '10px';
+        div.style.marginTop = '5vh';
+        div.style.borderRadius = '5px';
+        div.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+        div.style.width = `50%`;
+        div.style.marginLeft = `25%`;
+        div.innerHTML = `<h2>${input.value}</h2> <p>${text.value}</p> <p>${formatDate}</p>`;
+        container.appendChild(div);
 
-    classifica: function(){
-        console.log("Classifica:");
-        this.giocatori.forEach((giocatore, index) => {
-            console.log((index + 1) + ". " + giocatore.nome + " - " + giocatore.totale + " punti");
-        });
-},
-}
-
-
-bowling.creaPunteggio()
-bowling.nuovoGiocatore("Gianluca")
-bowling.punteggioTotale();
-bowling.vincitore()
-bowling.classifica()
+        input.value = '';
+        text.value = '';
+    }
+});
